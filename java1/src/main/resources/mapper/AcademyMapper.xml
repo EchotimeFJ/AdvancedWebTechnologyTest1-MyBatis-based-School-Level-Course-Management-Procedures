@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace表示命名空间 -->
+<mapper namespace="com.fujia.pojo.Academy">
+
+    <!-- 结果映射集 -->
+    <resultMap id="academyMap" type="Academy">
+        <id property="academyId" column="academyId"/>
+        <result property="academyName" column="academyName"/>
+    </resultMap>
+
+    <!-- 根据学院名模糊查询学院信息列表 或 查询所有学院信息列表-->
+    <select id="findAcademyByName" parameterType="String" resultMap="academyMap">
+        select * from academy where academyName like concat('%',#{academyName},'%')
+    </select>
+
+    <!-- 根据学院ID获取学院信息 -->
+    <select id="findAcademyById" parameterType="int" resultMap="academyMap">
+        select * from academy where academyId = #{academyId}
+    </select>
+
+    <!-- 添加学院信息-->
+    <insert id="addAcademy" parameterType="Academy">
+        insert into academy(academyId, academyName) values(#{academyId}, #{academyName})
+    </insert>
+
+    <!-- 更新学院信息-->
+    <update id="updateAcademy" parameterType="Academy">
+        update academy set academyName = #{academyName} where academyId = #{academyId}
+    </update>
+
+    <!-- 删除学院信息-->
+    <delete id="deleteAcademy" parameterType="int">
+        delete from academy where academyId = #{academyId}
+    </delete>
+</mapper>
